@@ -5,9 +5,10 @@ import { Button } from '../../presentation/components/Button';
 import { Target, Send, Reply, TrendingUp } from 'lucide-react';
 import styles from './dashboard.module.css';
 import { fetchLeadsAction } from '../../application/actions/leadActions';
+import { Lead } from '../../core/entities/Lead';
 
 export default async function DashboardPage() {
-  let leads = [];
+  let leads: Lead[] = [];
   try {
     leads = await fetchLeadsAction();
   } catch (error) {
