@@ -43,3 +43,16 @@ export async function updateLeadStatusAction(leadId: string, status: LeadStatus)
   revalidatePath('/dashboard/crm');
   return lead;
 }
+
+export async function deleteLeadAction(leadId: string) {
+  const supabase = await createServerSupabaseClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const { error } = await supabase.from('leads').delete().eq('id', leadId).eq('user_id', user.id);
+  if (error) throw new Error(error.message);
+
+  revalidatePath('/dashboard/crm');
+  revalidatePath('/dashboard');
+  return true;
+}
