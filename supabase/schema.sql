@@ -1,4 +1,4 @@
--- SCHEMA for First Client SaaS
+-- SCHEMA for ClientZero SaaS
 
 -- Enable UUID extension
 create extension if not exists "uuid-ossp";

@@ -21,13 +21,13 @@ export async function fetchLeadsAction() {
   return useCase.getAllLeads(user.id);
 }
 
-export async function addLeadAction(name: string, website?: string, email?: string) {
+export async function addLeadAction(name: string, website?: string, email?: string, notes?: string) {
   const supabase = await createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Unauthorized");
 
   const useCase = await getUseCase();
-  const lead = await useCase.addNewLead(user.id, name, website, email);
+  const lead = await useCase.addNewLead(user.id, name, website, email, notes);
   revalidatePath('/dashboard/crm');
   revalidatePath('/dashboard/leads');
   return lead;

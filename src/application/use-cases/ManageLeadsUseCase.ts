@@ -8,14 +8,14 @@ export class ManageLeadsUseCase {
     return this.leadRepository.getLeads(userId);
   }
 
-  async addNewLead(userId: string, name: string, website?: string, email?: string): Promise<Lead> {
+  async addNewLead(userId: string, name: string, website?: string, email?: string, notes?: string): Promise<Lead> {
     return this.leadRepository.addLead({
       user_id: userId,
       name,
       website: website || null,
       email: email || null,
       status: 'a_contacter',
-      notes: null,
+      notes: notes || null,
     });
   }
 

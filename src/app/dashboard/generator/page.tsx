@@ -6,20 +6,33 @@ import { Input } from '../../../presentation/components/Input';
 import { Button } from '../../../presentation/components/Button';
 import { Wand2, Copy, Check } from 'lucide-react';
 import styles from './generator.module.css';
+import { generateMessageAction } from '../../../application/actions/aiActions';
 
 export default function GeneratorPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedMessage, setGeneratedMessage] = useState('');
   const [isCopied, setIsCopied] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleGenerate = (e: React.FormEvent) => {
+  const [clientType, setClientType] = useState('');
+  const [service, setService] = useState('');
+
+  const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!clientType || !service) return;
+
     setIsGenerating(true);
-    // Simulation d'un appel API (Mock)
-    setTimeout(() => {
-      setGeneratedMessage("Bonjour,\n\nJ'ai remarqué votre excellente activité récente sur LinkedIn. En tant que spécialiste en création de sites web pour les restaurants, je serais ravi d'échanger avec vous sur la manière d'optimiser votre présence en ligne pour attirer plus de clients.\n\nSeriez-vous disponible pour un court appel la semaine prochaine ?\n\nBien à vous,");
+    setErrorMsg('');
+    
+    try {
+      const result = await generateMessageAction(clientType, service);
+      setGeneratedMessage(result);
+    } catch (err: any) {
+      console.error(err);
+      setErrorMsg(err.message || "Une erreur est survenue lors de la génération.");
+    } finally {
       setIsGenerating(false);
-    }, 1500);
+    }
   };
 
   const handleCopy = () => {
@@ -43,6 +56,8 @@ export default function GeneratorPage() {
             <Input 
               label="Type de client" 
               placeholder="ex: Propriétaire de restaurant"
+              value={clientType}
+              onChange={(e) => setClientType(e.target.value)}
               required
             />
             <div className={styles.inputGroup}>
@@ -50,10 +65,19 @@ export default function GeneratorPage() {
               <textarea 
                 className={styles.textarea}
                 placeholder="ex: Création de site web vitrine avec menu en ligne"
+                value={service}
+                onChange={(e) => setService(e.target.value)}
                 required
                 rows={3}
               />
             </div>
+            
+            {errorMsg && (
+              <div style={{ color: 'red', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                {errorMsg}
+              </div>
+            )}
+
             <Button 
               type="submit" 
               fullWidth 

@@ -9,6 +9,7 @@ export class SupabaseLeadRepository implements ILeadRepository {
     const { data, error } = await this.client
       .from('leads')
       .select('*')
+      .eq('user_id', userId)
       .order('created_at', { ascending: false });
 
     if (error) throw error;

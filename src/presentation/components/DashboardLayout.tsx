@@ -34,17 +34,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, emai
       {/* Sidebar */}
       <aside className={styles.sidebar}>
         <div className={styles.logoContainer}>
-          <span className={styles.logo}>First Client</span>
+          <span className={styles.logo}>ClientZero</span>
         </div>
 
         <nav className={styles.nav}>
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
-            
+
             return (
-              <Link 
-                key={item.name} 
+              <Link
+                key={item.name}
                 href={item.href}
                 className={`${styles.navItem} ${isActive ? styles.active : ''}`}
               >
@@ -56,10 +56,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, emai
         </nav>
 
         <div className={styles.sidebarFooter}>
-          <button className={styles.navItem}>
+          <Link href="/dashboard/settings" className={`${styles.navItem} ${pathname === '/dashboard/settings' ? styles.active : ''}`}>
             <Settings size={20} />
             <span>Paramètres</span>
-          </button>
+          </Link>
           <button className={`${styles.navItem} ${styles.logout}`} onClick={handleSignOut}>
             <LogOut size={20} />
             <span>Déconnexion</span>

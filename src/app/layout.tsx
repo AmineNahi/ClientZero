@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "First Client | SaaS pour Freelances",
+  title: "ClientZero | SaaS pour Freelances",
   description: "Trouve tes premiers clients freelance simplement, sans galérer.",
 };
 

@@ -5,11 +5,30 @@ import { createClient } from './client';
 export class SupabaseAuthRepository implements IAuthRepository {
   private client = createClient();
 
+  async signInWithEmail(email: string, password: string): Promise<void> {
+    const { error } = await this.client.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+  }
+
+  async signUpWithEmail(email: string, password: string): Promise<void> {
+    const { error } = await this.client.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    if (error) throw error;
+  }
+
   async signInWithGoogle(): Promise<void> {
     await this.client.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/dashboard`
+        redirectTo: `${window.location.origin}/auth/callback`
       }
     });
   }
@@ -18,7 +37,7 @@ export class SupabaseAuthRepository implements IAuthRepository {
     await this.client.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: `${window.location.origin}/dashboard`
+        redirectTo: `${window.location.origin}/auth/callback`
       }
     });
   }

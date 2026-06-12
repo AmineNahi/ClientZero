@@ -10,7 +10,7 @@ export default function LandingPage() {
     <main className={styles.main}>
       {/* Header */}
       <header className={styles.header}>
-        <div className={styles.logo}>First Client</div>
+        <div className={styles.logo}>ClientZero</div>
         <nav className={styles.nav}>
           <Link href="/login" className={styles.navLink}>Connexion</Link>
           <Link href="/login">
@@ -60,6 +60,13 @@ export default function LandingPage() {
           </Card>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer style={{ marginTop: 'auto', padding: '2rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+        <Link href="/mentions-legales" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9rem' }}>Mentions Légales</Link>
+        <Link href="/confidentialite" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9rem' }}>Politique de Confidentialité</Link>
+        <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>&copy; {new Date().getFullYear()} ClientZero. Tous droits réservés.</span>
+      </footer>
     </main>
   );
 }
