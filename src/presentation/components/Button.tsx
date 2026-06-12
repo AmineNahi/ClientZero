@@ -47,7 +47,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading && <Loader2 className={styles.spinner} size={18} />}
         {!isLoading && leftIcon && <span className={styles.icon}>{leftIcon}</span>}
-        {children}
+        {children as React.ReactNode}
         {!isLoading && rightIcon && <span className={styles.icon}>{rightIcon}</span>}
       </motion.button>
     );
